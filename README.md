@@ -127,7 +127,7 @@ Tekton is a powerful yet flexible Kubernetes-native open-source framework for cr
 To know about it please visit [here](https://developer.ibm.com/articles/introduction-to-tekton-architecture-and-design/)
 
 Please follow below steps to initialize Tekton:
-1. Open Openshift Web Console.
+1. Open OpenShift Web Console.
 2. Once you are logged in successfully, select **Kabanero** from my project section.
 3. From left menu select **Cloud Pak for Applications**
 4. Now you can see the below screen.
@@ -171,7 +171,7 @@ For more details about Tekton, please check out this great tutorial [here](https
 
 
 ### 5. Verify if the microservices are up and running
-1. Open the Openshift dashboard.
+1. Open the OpenShift dashboard.
 2. Once the dashboard is open from the left menu select Application.
 3. Go in routes and there will be two services up and running.
 4. To run the application click links in **Hostname**
