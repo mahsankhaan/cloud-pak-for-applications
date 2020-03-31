@@ -46,8 +46,8 @@ There are 5 services under the "views" folder running in a single project that a
 
 ![GitHub Logo](images/sc.png)
 
-### 2. Install Codewind in Visual Studio to create microservices test and deploy to GitHub 
- 
+### 2. Understand how to break down our monolithic application
+
 Here are 5 tightly coupled services:
  
 1. Admin login
