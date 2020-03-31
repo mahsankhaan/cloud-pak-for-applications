@@ -1,6 +1,6 @@
-# Traditional core monolithic banking application implemented in Node.js to mordernize microservices architecture using IBM Cloud Pak for Applications
+# Modernizing a traditional monolithic Node.js-based core banking application into microservices architecture using IBM Cloud Pak for Applications
 
-In this tutorial, we will learn and see the complete life cycle of core monolithic banking application implemented in node.js to modernize microservices architecture using IBM Cloud Pak for Applications.
+In this tutorial, we will look at the how and lifecycle of modernizing and transforming a monolithic core banking application implemented in Node.js into microservices architecture using IBM Cloud Pak for Applications.
 
 
 ## IBM Cloud Pak for Applications:
@@ -187,4 +187,4 @@ For more details about Tekton, please check out this great tutorial [here](https
 ![GitHub Logo](images/ss2.png)
 
 ### 6. Conclusion
-In this tutorial, we have learned the complete lifecycle of Architecture modernization using IBM Cloud Pak for Applications. We've seen how can we integrate Codewind in our visual studio that helps in breaking down the one traditional monolithic project containing multiple services into two projects containing related services to each project and how can we test, debug and monitor each project services independently. Once we are satisfied with our projects in local development then we can deploy it to the central repo GitHub. From there we learn how to create GitHub token and integrate Tekton instance from IBM Cloud Pak for Applications that help in CI/CD process that triggers all the changes implemented by the local development team. Both the projects running successfully and independently on  IBM Cloud Pak for Applications and now we can scale them depending on the workload. In the future, we can integrate as many microservices as we want without affecting or shutting down the complete project.
+In this tutorial, we learned the lifecycle and how application modernization for a Node.js application using IBM Cloud Pak for Applications. We saw how we can integrate Codewind in Visual Studio that helps in breaking down the one traditional monolithic project containing multiple services into two projects containing related services to each project and how can we test, debug and monitor each project services independently. Once we are satisfied with our projects in local development then we can deploy it to the central repo GitHub. From there we learn how to create GitHub token and integrate Tekton instance from IBM Cloud Pak for Applications that help in CI/CD process that triggers all the changes implemented by the local development team. Both the projects running successfully and independently on  IBM Cloud Pak for Applications and now we can scale them depending on the workload. In the future, we can integrate as many microservices as we want without affecting or shutting down the complete project.
