@@ -187,7 +187,7 @@ app.listen(3000 , function(){
 
 ![GitHub Logo](images/ss.png)
 
-19. Once we have tested and created deployments for our two microservices it's time to upload them one by one to central repository **GitHub**.
+18. Once we have tested and created deployments for our two microservices it's time to upload them one by one to central repository **GitHub**.
 
 Note: If you face any difficulty in executing step 3 please check out these repositories available and created using Codewind
 1. [Admin-microservice](https://github.com/mahsankhaan/micro-admin.git)
