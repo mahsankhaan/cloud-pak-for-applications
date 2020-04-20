@@ -152,8 +152,8 @@ metadata:
 
 **NOTE: If you don't have namepsace section please add it as above**
 
-17  We have successfully created an Admin microservice.
-18. Follow step 3 again to create 2 microservice and name it **micro-user**. And you will end up with like the below structure. But this time our **app.js** will be for the users so copy the below code.
+17.  We have successfully created an Admin microservice.
+18. Follow step 3 again to create 2 microservice and name it **micro-user**. And we will have the structure like below.But this time our **app.js** will be for the users so copy the below code.
 
 ```
 const express = require("express")
