@@ -213,7 +213,7 @@ Once both tokens are created you will able to see below image :
 #### What is Tekton and why are we using it?
 Tekton is a powerful yet flexible Kubernetes-native open-source framework for creating continuous integration and delivery (CI/CD) systems. We are using Tekton because it is a built-in tool in IBM Cloud Pak for Applications that connect our central repository **GitHub** and **Webhook** that lift and shift our application source code form local development to the cloud.
 
-To know about it please visit [here](https://developer.ibm.com/articles/introduction-to-tekton-architecture-and-design/)
+To know more about Tekton,please visit [here](https://developer.ibm.com/articles/introduction-to-tekton-architecture-and-design/)
 
 Please follow below steps to initialize Tekton:
 1. Open OpenShift Web Console.
