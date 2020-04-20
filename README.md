@@ -154,11 +154,41 @@ metadata:
 **NOTE: If you don't have namepsace section please add it as above**
 
 14  We have successfully created an Admin microservice.
-15. Follow step 3 again to create 2 microservice and name it **micro-user**. And you will end up with like the below structure. Please this time in 
+15. Follow step 3 again to create 2 microservice and name it **micro-user**. And you will end up with like the below structure. But this time our **app.js** will be for the users so copy the below code.
+
+```
+const express = require("express")
+const path = require('path');
+const app = express();
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(path.join(__dirname, 'node_modules')));
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get("/user_login", function(req,res){
+    res.render("user_login");
+    console.log("User login");
+});
+app.get("/user_in", function(req,res){ 
+    var Name = req.query.name;
+    var Password = req.query.pass;
+if (Password =="123")
+{ 
+  console.log("Successfully logged in as user");
+  res.render("users");
+}
+else{
+    res.render("notfound.ejs");
+}
+});
+app.listen(3000 , function(){
+    console.log("App is running");
+});
+```
 
 ![GitHub Logo](images/ss.png)
 
-16. Once we have tested and created deploments for our two microservices it's time to upload them one by one to central repository **GitHub**.
+16. Once we have tested and created deployments for our two microservices it's time to upload them one by one to central repository **GitHub**.
 
 Note: If you face any difficulty in executing step 3 please check out these repositories available and created using Codewind
 1. [Admin-microservice](https://github.com/mahsankhaan/micro-admin.git)
