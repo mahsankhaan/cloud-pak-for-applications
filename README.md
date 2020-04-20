@@ -128,26 +128,41 @@ module.exports.app = app;
 
 ![GitHub Logo](images/s2.png)
 
-10. Go to **Codewind** in VS you must see your project there running as "micro-admin" right-click it and select **Open Application** this will popup the page and from there **enable project** (if it is disabled) and then select **build**. Check **Application Endpoint** it shows where your application running.
+13. Go to **Codewind** in VS you must see your project there running as "micro-admin" right-click it and select **Open Application** this will popup the page and from there **enable project** (if it is disabled) and then select **build**. Check **Application Endpoint** it shows where your application running.
 
-11. Test your application by right-clicking micro-admin -> **Application Monitor** and hit the application 2 or 3 times to see the changes.
+14. Test your application by right-clicking micro-admin -> **Application Monitor** and hit the application 2 or 3 times to see the changes.
 
 ![GitHub Logo](images/s3.png)
 
-12. Run `appsody build` in your VS terminal which will create a deployment file template for us and later on help in deploying our application on CP4A.
-13. After the above command executed successfully on left there will be a new generated file as **app-deploy.yaml**.
+15. Run `appsody build` in your VS terminal,as we dont have to worry and spend our time on deployment configuration as codewind can create for us and we only need to focus on our application development.
+13. After the above command executed successfully on left there will be a new generated file as **app-deploy.yaml**. This file later on help us in deploying the application on CP4A.
+```
+apiVersion: appsody.dev/v1beta1
+kind: AppsodyApplication
+metadata:
+  namespace: kabanero
+  creationTimestamp: null
+  labels:
+    image.opencontainers.org/title: micro-admin
+    stack.appsody.dev/id: nodejs-express
+    stack.appsody.dev/version: 0.2.8
+  name: micro-admin
+  ....
+```
+
+**NOTE: If you don't have namepsace section please add it as above**
+
 14  We have successfully created an Admin microservice.
-15. Follow step 3 again to create 2 microservice and name it **micro-user**. And you will end up with like the below structure.
+15. Follow step 3 again to create 2 microservice and name it **micro-user**. And you will end up with like the below structure. Please this time in 
 
 ![GitHub Logo](images/ss.png)
 
-16. Once two microservices are created we can upload it one by one to central repository **GitHub**.
+16. Once we have tested and created deploments for our two microservices it's time to upload them one by one to central repository **GitHub**.
 
 Note: If you face any difficulty in executing step 3 please check out my repositories available created using Codewind
 1. [Admin-microservice](https://github.com/mahsankhaan/micro-admin.git)
 2. [User-microservice](https://github.com/mahsankhaan/micro-user.git)
 
-To learn more about Codewind please visit [here](https://www.eclipse.org/codewind/mdt-vsc-overview.html)
 
 
 ### 4. Initialize Tekton and integrate with GitHub repository
