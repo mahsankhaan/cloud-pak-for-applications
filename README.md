@@ -87,7 +87,7 @@ Once we have decided which service needs to be converted into micro-services,let
 8. Select the folder where you want to initialize tempate and name it as **micro-admin**. (This step can take 5-10mins)
 9. Once your template is initalized successfully,kindly open the folder where you have created mirco-admin. And you are able to see below image.
 ![GitHub Logo](images/c1.png)
-10. Now go into the folder where the monolithic application was cloned in the step one.  And there you can find **app.js** file and copy these lines. 
+10. For that we need to do three steps.First, visit the folder where we have cloned our monolithic application [here](#1-clone-and-understand-the-architecture-of-monolithic-application) and from there you can find **app.js** file and copy below lines. Second, copy complete **public** folder and third, from **views** folder only copy(admin.ejs ,admin_login.ejs,     notfound.ejs) 
 ```
 const express = require("express")
 const path = require('path');
