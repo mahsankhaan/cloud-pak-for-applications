@@ -126,7 +126,7 @@ module.exports.app = app;
 
 ![GitHub Logo](images/s2.png)
 
-13. Open your terminal inside the Visual Studio. Run Command `npm install ejs`. This will install Embedded JavaScript templating that we are using for front-end styling.
+13. Open your terminal inside the VS. Run Command `npm install ejs`. This will install Embedded JavaScript templating that we are using for front-end styling.
 
 
 13. Go to **Codewind** in VS you must see your project there running as "micro-admin" right-click it and select **Open Application** this will popup the page and from there **enable project** (if it is disabled) and then select **build**. Check **Application Endpoint** it shows where your application running.
@@ -160,7 +160,7 @@ metadata:
 
 16. Once we have tested and created deploments for our two microservices it's time to upload them one by one to central repository **GitHub**.
 
-Note: If you face any difficulty in executing step 3 please check out my repositories available created using Codewind
+Note: If you face any difficulty in executing step 3 please check out these repositories available and created using Codewind
 1. [Admin-microservice](https://github.com/mahsankhaan/micro-admin.git)
 2. [User-microservice](https://github.com/mahsankhaan/micro-user.git)
 
