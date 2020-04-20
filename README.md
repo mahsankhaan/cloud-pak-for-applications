@@ -89,8 +89,7 @@ Once we have decided which service needs to be converted into micro-services,let
 
 ![GitHub Logo](images/c1.png)
 
-10. Now in this step we will break down our monolithic application and for that we need to do three steps. 
-11. First, visit the folder where we have cloned our monolithic application [here](#1-clone-and-understand-the-architecture-of-monolithic-application) and from there you can find **app.js** file and copy below lines. Second, copy complete **public** folder and third, from **views** folder only copy(admin.ejs ,admin_login.ejs,notfound.ejs) 
+10. Now in this step we will break down our monolithic application and for that we need to do three steps.First, visit the folder where we have cloned our monolithic application [here](#1-clone-and-understand-the-architecture-of-monolithic-application) and from there you can find **app.js** file and copy below lines. Second, copy complete **public** folder and third, from **views** folder only copy(admin.ejs ,admin_login.ejs,notfound.ejs) 
 ```
 const express = require("express")
 const path = require('path');
@@ -122,20 +121,20 @@ module.exports.app = app;
 
 ```
 
-12. Once we have copied all these three steps from above, let's move them into the micro-admin folder. First,replace the **app.js** with the copied version and then move the **public** and **views** folder. Now our final structure would be like below.
+11. Once we have copied all these three steps from above, let's move them into the micro-admin folder. First,replace the **app.js** with the copied version and then move the **public** and **views** folder. Now our final structure would be like below.
 
 ![GitHub Logo](images/s2.png)
 
-13. Open your terminal inside the VS. Run Command `npm install ejs`. This will install Embedded JavaScript templating that we are using for front-end styling.
+12. Open your terminal inside the VS. Run Command `npm install ejs`. This will install Embedded JavaScript templating that we are using for front-end styling.
 
 
-14. Go to **Codewind** in VS you must see your project there running as "micro-admin" right-click it and select **Open Application** this will popup the page and from there **enable project** (if it is disabled) and then select **build**. Check **Application Endpoint** it shows where your application running.
+13. Go to **Codewind** in VS you must see your project there running as "micro-admin" right-click it and select **Open Application** this will popup the page and from there **enable project** (if it is disabled) and then select **build**. Check **Application Endpoint** it shows where your application running.
 
-15. Test your application by right-clicking micro-admin -> **Application Monitor** and hit the application 2 or 3 times to see the changes.
+14. Test your application by right-clicking micro-admin -> **Application Monitor** and hit the application 2 or 3 times to see the changes.
 
 ![GitHub Logo](images/s3.png)
 
-16. Run `appsody build` in your VS terminal,as we dont have to worry and spend our time on deployment configuration file as codewind will create for us and we only need to focus on our application development.
+15. Run `appsody build` in your VS terminal,as we dont have to worry and spend our time on deployment configuration file as codewind will create for us and we only need to focus on our application development.
 16. After the above command executed successfully on left there will be a new generated file as **app-deploy.yaml**. This file later on help us in deploying the application on CP4A.
 ```
 apiVersion: appsody.dev/v1beta1
