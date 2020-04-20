@@ -86,9 +86,11 @@ Once we have decided which service needs to be converted into micro-services,let
 7. Select template **Kabanero Node.js Express simple template**
 8. Select the folder where you want to initialize tempate and name it as **micro-admin**. (This step can take 5-10mins)
 9. Once your template is initalized successfully,kindly open the folder where you have created mirco-admin. And you are able to see below image.
+
 ![GitHub Logo](images/c1.png)
+
 10. Now in this step we will break down our monolithic application and for that we need to do three steps. 
-1. First, visit the folder where we have cloned our monolithic application [here](#1-clone-and-understand-the-architecture-of-monolithic-application) and from there you can find **app.js** file and copy below lines. Second, copy complete **public** folder and third, from **views** folder only copy(admin.ejs ,admin_login.ejs,     notfound.ejs) 
+11. First, visit the folder where we have cloned our monolithic application [here](#1-clone-and-understand-the-architecture-of-monolithic-application) and from there you can find **app.js** file and copy below lines. Second, copy complete **public** folder and third, from **views** folder only copy(admin.ejs ,admin_login.ejs,notfound.ejs) 
 ```
 const express = require("express")
 const path = require('path');
@@ -122,9 +124,7 @@ module.exports.app = app;
 
 ```
 
-11. Now you can erase the code inside  **app.js** file available in micro-admin folder and paste the above code.
-
-9 Now your structure will be something like:
+12. Once we have copied all these three steps from above, let's move them into the micro-admin folder. First,replace the **app.js** with the copied version and then move the **public** and **views** folder. Now our final structure would be like below.
 
 ![GitHub Logo](images/s2.png)
 
