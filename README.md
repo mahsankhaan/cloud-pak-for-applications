@@ -89,7 +89,7 @@ Once we have decided which service needs to be converted into micro-services,let
 
 ![GitHub Logo](images/c12.png)
 
-10. Now in this step we will break down our monolithic application and for that we need to do three steps.First, visit the folder where we have cloned our monolithic application [here](#1-clone-and-understand-the-architecture-of-monolithic-application) and from there you can find **app.js** file and copy below lines. Second, copy complete **public** folder and third, from **views** folder only copy(admin.ejs ,admin_login.ejs,notfound.ejs) 
+10. Now in this step we will break down our monolithic application and for that we need to do three steps.First, visit the folder where we have cloned our monolithic application [here](#1-clone-and-understand-the-architecture-of-monolithic-application) and from there you can find **app.js** file and copy below lines. 
 ```
 const express = require("express")
 const path = require('path');
@@ -120,6 +120,8 @@ else{
 module.exports.app = app;
 
 ```
+
+Second, copy complete **public** folder and third, from **views** folder only copy(admin.ejs ,admin_login.ejs,notfound.ejs) 
 
 11. Once we have copied all these three steps from above, let's move them into the micro-admin folder. First,replace the **app.js** with the copied version and then move the **public** and **views** folder. Now our final structure would be like below.
 
