@@ -84,8 +84,45 @@ Once we have decided which service needs to be converted into micro-services,let
 5. Select **Codewind** and start local Codewind.
 6. Right-click on local and select **Create New Project** 
 7. Select template **Kabanero Node.js Express simple template**
-8. Name it as **micro-admin**.
-9. Now your structure will be something like:
+8. Select the folder where you want to initialize tempate and name it as **micro-admin**. (This step can take 5-10mins)
+9. Once your template is initalized successfully,kindly open the folder where you have created mirco-admin. And you are able to see below image.
+![GitHub Logo](images/c1.png)
+10. Now go into the folder where the monolithic application was cloned in the step one.  And there you can find **app.js** file and copy these lines. 
+```
+const express = require("express")
+const path = require('path');
+const app = express();
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(path.join(__dirname, 'node_modules')));
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get("/home", function(req,res){
+    res.send("Hello everyone");
+});
+app.get("/admin_login", function(req,res){
+    res.render("admin_login");
+    console.log("User login");
+});
+app.get("/admin_in", function(req,res){ 
+    var Name = req.query.name;
+    var Password = req.query.pass;
+if (Password =="123")
+{ 
+  console.log("Successfully logged in as admin");
+  res.render("admin");
+}
+else{
+    res.render("notfound.ejs");
+}
+});
+module.exports.app = app;
+
+```
+
+11. Now you can erase the code inside  **app.js** file available in micro-admin folder and paste the above code.
+
+9 Now your structure will be something like:
 
 ![GitHub Logo](images/s2.png)
 
