@@ -7,7 +7,6 @@ app.use(express.static(path.join(__dirname, 'node_modules')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get("/home", function(req,res){
-    console.log("I am home");
     res.send("Hello everyone");
 });
 app.get("/", function(req,res){
@@ -22,16 +21,9 @@ app.get("/admin_in", function(req,res){
     var Name = req.query.name;
     var Password = req.query.pass;
 if (Password =="123")
-{
-    const customer = [
-        {id:"1", name:"Ahmed" , pass:"123"},
-        {id:"2", name:"Saad" , pass:"321"},
-        {id:"2", name:"Kamran" , pass:"213"}
-  ]
-  console.log("Successfully logged in as Customer");
-  res.render("admin" , {
-      customer: customer
-  });
+{ 
+  console.log("Successfully logged in as admin");
+  res.render("admin");
 }
 else{
     res.render("notfound.ejs");
