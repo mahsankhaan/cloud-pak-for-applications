@@ -136,7 +136,7 @@ module.exports.app = app;
 ![GitHub Logo](images/s3.png)
 
 15. Run `appsody build` in your VS terminal,as we dont have to worry and spend our time on deployment configuration file as codewind will create for us and we only need to focus on our application development.
-13. After the above command executed successfully on left there will be a new generated file as **app-deploy.yaml**. This file later on help us in deploying the application on CP4A.
+16. After the above command executed successfully on left there will be a new generated file as **app-deploy.yaml**. This file later on help us in deploying the application on CP4A.
 ```
 apiVersion: appsody.dev/v1beta1
 kind: AppsodyApplication
@@ -153,8 +153,8 @@ metadata:
 
 **NOTE: If you don't have namepsace section please add it as above**
 
-14  We have successfully created an Admin microservice.
-15. Follow step 3 again to create 2 microservice and name it **micro-user**. And you will end up with like the below structure. But this time our **app.js** will be for the users so copy the below code.
+17  We have successfully created an Admin microservice.
+18. Follow step 3 again to create 2 microservice and name it **micro-user**. And you will end up with like the below structure. But this time our **app.js** will be for the users so copy the below code.
 
 ```
 const express = require("express")
@@ -188,7 +188,7 @@ app.listen(3000 , function(){
 
 ![GitHub Logo](images/ss.png)
 
-16. Once we have tested and created deployments for our two microservices it's time to upload them one by one to central repository **GitHub**.
+19. Once we have tested and created deployments for our two microservices it's time to upload them one by one to central repository **GitHub**.
 
 Note: If you face any difficulty in executing step 3 please check out these repositories available and created using Codewind
 1. [Admin-microservice](https://github.com/mahsankhaan/micro-admin.git)
