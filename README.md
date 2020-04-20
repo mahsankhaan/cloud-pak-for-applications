@@ -134,7 +134,7 @@ module.exports.app = app;
 
 ![GitHub Logo](images/s3.png)
 
-15. Run `appsody build` in your VS terminal,as we dont have to worry and spend our time on deployment configuration as codewind can create for us and we only need to focus on our application development.
+15. Run `appsody build` in your VS terminal,as we dont have to worry and spend our time on deployment configuration file as codewind will create for us and we only need to focus on our application development.
 13. After the above command executed successfully on left there will be a new generated file as **app-deploy.yaml**. This file later on help us in deploying the application on CP4A.
 ```
 apiVersion: appsody.dev/v1beta1
