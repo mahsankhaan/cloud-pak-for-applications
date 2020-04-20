@@ -48,7 +48,7 @@ There are 5 services under the "views" folder running in a single project that a
 
 ### 2. Understand how to break down our monolithic application
 
-Here are 5 tightly coupled services:
+There are 5 tightly coupled services:
  
 1. Admin login
 2. Admin Dashboard
@@ -64,7 +64,7 @@ Breakdown will be into two microservices:
 2. [User Microservice](https://github.com/mahsankhaan/micro-user)
 
 #### How will we do that?
-We will put Admin services in one project and User into another and deploy it on the central repo (Github) both will have their dependencies and run independently. Below architecture diagram is self explanatory,but don't worry if it doesn't make sense to you right now after the next few steps you will learn and understand how to do that.
+We will put Admin services in one project and User services into another and deploy it on the central repo (Github) both will have their dependencies and run independently. Below architecture diagram is self explanatory,but don't worry if it doesn't make sense to you right now after the next few steps you will learn and understand how to do that.
 
 ![GitHub Logo](images/micro.png)
 
