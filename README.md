@@ -129,13 +129,13 @@ module.exports.app = app;
 13. Open your terminal inside the VS. Run Command `npm install ejs`. This will install Embedded JavaScript templating that we are using for front-end styling.
 
 
-13. Go to **Codewind** in VS you must see your project there running as "micro-admin" right-click it and select **Open Application** this will popup the page and from there **enable project** (if it is disabled) and then select **build**. Check **Application Endpoint** it shows where your application running.
+14. Go to **Codewind** in VS you must see your project there running as "micro-admin" right-click it and select **Open Application** this will popup the page and from there **enable project** (if it is disabled) and then select **build**. Check **Application Endpoint** it shows where your application running.
 
-14. Test your application by right-clicking micro-admin -> **Application Monitor** and hit the application 2 or 3 times to see the changes.
+15. Test your application by right-clicking micro-admin -> **Application Monitor** and hit the application 2 or 3 times to see the changes.
 
 ![GitHub Logo](images/s3.png)
 
-15. Run `appsody build` in your VS terminal,as we dont have to worry and spend our time on deployment configuration file as codewind will create for us and we only need to focus on our application development.
+16. Run `appsody build` in your VS terminal,as we dont have to worry and spend our time on deployment configuration file as codewind will create for us and we only need to focus on our application development.
 16. After the above command executed successfully on left there will be a new generated file as **app-deploy.yaml**. This file later on help us in deploying the application on CP4A.
 ```
 apiVersion: appsody.dev/v1beta1
