@@ -97,8 +97,9 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'node_modules')));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get("/home", function(req,res){
-    res.send("Hello everyone");
+app.get("/", function(req,res){
+    res.render("admin_login");
+    console.log("User login");
 });
 app.get("/admin_login", function(req,res){
     res.render("admin_login");
