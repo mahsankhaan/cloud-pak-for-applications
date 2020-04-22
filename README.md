@@ -56,7 +56,7 @@ There are 5 tightly coupled services:
 4. User Dashboard
 5. Not found 
 
-After looking at the above services we can identify that we can breakdown Admin(login, dashboard) and User (login, dashboard) services into Microservices so they can run independently because both the services have different functionalities so we can scale it depending on the workload.
+After looking at the above services we can identify that we can breakdown Admin(login, dashboard) and User (login, dashboard) services into Microservices so they can run independently because both the services have different functionalities so we can scale them depending on the workload.
 
 Breakdown will be into two microservices:
 
