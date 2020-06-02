@@ -1,4 +1,4 @@
-# Monolithic to Microservices Architecture using Cloud Pak for Applications
+**Modernize a monolithic Node.js application into a microservices architecture using IBM Cloud Pak for Applications**
 
 In this tutorial , we will learn how to use Cloud Pak for Applications to break down our monolithic (Core Banking) application implemented in Node.js into microservices.  
 
