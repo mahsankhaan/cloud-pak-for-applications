@@ -34,7 +34,7 @@ To complete the steps in this tutorial, you need:
 * [Docker](https://docs.docker.com/install/) on your local computer.
 * [Visual Studio Code](https://code.visualstudio.com/) for local development.
 * Access to a [Red Hat OpenShift on IBM Cloud](https://cloud.ibm.com/kubernetes/catalog/openshiftcluster/?cm_sp=ibmdev-_-developer-tutorials-_-cloudreg) cluster with [IBM Cloud Pak for Applications](https://cloud.ibm.com/catalog/content/ibm-cp-applications-b4fbe4b9-a9de-406a-94de-5e0c7dc20bf7-global/?cm_sp=ibmdev-_-developer-tutorials-_-cloudreg).
-* A [GitHub](https://github.com/) account.
+* A [GitHub](https://github.com/) account and some knowledge of git commands.
 
 ## Estimated time
 
@@ -184,7 +184,7 @@ Since you know which services will be converted into microservices, start by ini
 
   ![Screen capture of updated micro-user folder](images/ss.png)
 
-   Once you finish testing and creating the User microservice, it's time to individually upload both microserves to the central GitHub repository, which will be explained in [Step 3](#step-3-initialize-tekton-and-integrate-with-the-central-github-repository).
+   Once you finish testing and creating the User microservice, individually upload both microserves to the central GitHub repository.
 
 *Note:* If you have any difficulty executing this step to create both microservices, please check out the following sample repositories that were created using Codewind:
 
@@ -255,7 +255,7 @@ To initialize Tekton, perform the following tasks:
 
    *Important:* Do not worry if you get an error notice. This will resolve after the repositry code is updated.
 
-1.Now lets make some changes in micro-admin and micro-user repositries that were created in[step 2](#step-2-install-codewind-in-visual-studio-to-create-a-microservices-test-and-deploy-to-GitHub) to trigger our Tekton pipeline. First open __micro-admin__ repo and inside views folder open __admin.ejs__ file and make some change like search for "My Dashboard" text and make it capital "MY DASHBOARD", once you are done __commit__ the file. Perfom same procedure for __micro-user__(make change in user.ejs)file.
+1. Now lets make some changes in micro-admin and micro-user repositries that were created in [step 2](#step-2-install-codewind-in-visual-studio-to-create-a-microservices-test-and-deploy-to-GitHub) to trigger our Tekton pipeline. First open __micro-admin__ repo and inside views folder open __admin.ejs__ file and make some change like search for "My Dashboard" text and make it capital "MY DASHBOARD", once you are done __commit__ the file. Perfom same procedure for __micro-user__(make change in user.ejs)file.
 
 1. Next, open your Tekton dashboard. Under the Tekton dropdown list, select **PipelineRuns**.
 1. Wait until the rows under the **Status** column display `All tasks completed executing`, which indicates you successfully integrated your central repo to your Tekton instance on IBM Cloud Pak for Applications.  
