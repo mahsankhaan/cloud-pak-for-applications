@@ -38,7 +38,7 @@ To complete the steps in this tutorial, you need:
 
 ## Estimated time
 
-After the prerequisites are installed, this tutorial will take __[EDITOR NOTE: HOW MANY MINUTES ARE REQUIRED?]__ to complete the steps.
+After the prerequisites are installed, this tutorial will take 90min to complete the steps.
 
 ## Steps
 
@@ -199,17 +199,15 @@ Before you initialize Tekton, it is really important to create two GitHub tokens
 1. Click your profile photo to expand the account profile menu.
 1. Within the menu, click **Settings > Developer settings > Personal access tokens**.
 1. Click the **Generate new token** button.
-1. Give your first token a descriptive name by typing `tekton` into the **Note** field.
+1. Give your first token a descriptive name by typing `tekton-app-user` into the **Note** field.
 1. Select the scopes, or permissions, you'd like to grant this token. To use your token to access repositories from the command line, select the **repo** checkbox.
 
    ![Screen capture of Developer settings page in GitHub](images/s6.png)
 
-   __[EDITOR NOTE: UPDATE BOTH SCREEN CAPTURE IMAGES `S6.PNG` AND `S12.PNG` TO REFLECT THE EXACT TUTORIAL INSTRUCTIONS. THE TOKEN NAME IN IMAGE `S6.PNG` IS `TEKTON`, BUT BOTH OF THE TOKEN NAMES IN IMAGE `S12.PNG` APPEAR AS `TEKTON-APP` BECAUSE THE REST OF THE NAMES ARE COVERED UP BY THE BLACK BOX.]__
-
 1. Click the **Generate token** button.
 1. Copy the token to your clipboard. *It is important that you do this.* For security reasons, after you navigate off the page, you will not be able to see the token again.
 1. To create your second token, click the **Generate new token** button again.
-1. Give your second token a descriptive name by typing `tekton` into the **Note** field. __[EDITOR NOTE: PLEASE PROVIDE YOUR READER WITH THE SECOND NAME TO USE SO THEIR RESULTS MATCH THE ONES DISPLAYED IN YOUR SCREEN CAPTURE IN IMAGE `S12.PNG`.]__
+1. Give your second token a descriptive name by typing `tekton-app-admin` into the **Note** field.
 1. Select the scopes, or permissions, you'd like to grant this token. To use your token to access repositories from the command line, select the **repo** checkbox.
 1. Click the **Generate token** button.
 1. Copy the second token to your clipboard. *It is important that you do this for both tokens.*
@@ -251,13 +249,14 @@ To initialize Tekton, perform the following tasks:
 
    Click __Create__.
 
-1. Check that Tekton and GitHub are successfully connected by opening your GitHub repository ... __[EDITOR NOTE: ADD SPECIFIC INSTRUCTIONS ABOUT HOW TO NAVIGATE TO THE CORRECT LOCATIONS IN GITHUB TO CHECK THIS.]__
+1. Check that Tekton and GitHub are successfully connected by opening your micro and admin repositories. Go to micro-admin repository, from there select __Webhooks__ on left menu and if pipeline is connected properly then there must be a link on right `http://w1-admin-6zmvc.kabanero..` (you may have different link) . Kindly follow the same procedure for micro-user repository.  
 
    ![Screen capture of Webhooks section of GitHub](images/s8.png)
 
-   *Important:* Do not worry if you get an error notice. This will resolve after the repo code is updated.
+   *Important:* Do not worry if you get an error notice. This will resolve after the repositry code is updated.
 
-1. Open your GitHub and perform some changes within **(views -> user.js)** in the user repository, an important step to trigger the Tekton pipeline. __[EDITOR NOTE: PLEASE BE MORE SPECIFIC WITH THE INSTRUCTIONS FOR THIS TASK. A FILE CALLED `USER.JS` AND A REPO CALLED `USER REPOSITORY` ARE NOT MENTIONED PREVIOUSLY IN THIS TUTORIAL. ARE YOU REFERRING TO THE `MICRO-USER` REPO CREATED IN STEP 2 AND THE `USERS.EJS` FILE WITHIN IT? ALSO, BE VERY SPECIFIC ABOUT THE CHANGES YOUR READER SHOULD MAKE TO SEE THE RESULTS YOU ARE DESCRIBING.]__
+1.Now lets make some changes in micro-admin and micro-user repositries that were created in[step 2](#step-2-install-codewind-in-visual-studio-to-create-a-microservices-test-and-deploy-to-GitHub) to trigger our Tekton pipeline. First open __micro-admin__ repo and inside views folder open __admin.ejs__ file and make some change like search for "My Dashboard" text and make it capital "MY DASHBOARD", once you are done __commit__ the file. Perfom same procedure for __micro-user__(make change in user.ejs)file.
+
 1. Next, open your Tekton dashboard. Under the Tekton dropdown list, select **PipelineRuns**.
 1. Wait until the rows under the **Status** column display `All tasks completed executing`, which indicates you successfully integrated your central repo to your Tekton instance on IBM Cloud Pak for Applications.  
 
