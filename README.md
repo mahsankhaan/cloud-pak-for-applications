@@ -1,281 +1,289 @@
-# Modernizing a traditional monolithic Node.js-based core banking application into microservices architecture using IBM Cloud Pak for Applications
+**Modernize a monolithic Node.js application into a microservices architecture using IBM Cloud Pak for Applications**
 
-In this tutorial, we will look at the how and lifecycle of modernizing and transforming a monolithic core banking application implemented in Node.js into microservices architecture using IBM Cloud Pak for Applications.
+This tutorial shows how to transform a traditional monolithic core banking application, which is implemented in Node.js, into a modern microservices architecture by using IBM Cloud Pak for Applications.
 
+Cloud Pak for Applications speeds the development of applications that are built for Kubernetes by using agile DevOps processes. Running on Red Hat OpenShift, the Cloud Pak provides a hybrid, multicloud foundation that is built on open standards, enabling workloads and data to run anywhere. It integrates two main open source projects: [Kabanero](https://kabanero.io/) and [Appsody](https://appsody.dev/).
 
-## IBM Cloud Pak for Applications:
-The IBM Cloud Pak™ for Applications provides a complete and consistent experience to speed development of applications built for Kubernetes, using agile DevOps processes.
+This tutorial uses a [sample monolithic banking application](https://github.com/mahsankhaan/cloud-pak-for-applications.git), which is illustrated in the following architecture diagram:
 
-Running on Red Hat® OpenShift®, IBM Cloud Pak for Applications provides a hybrid, multicloud foundation built on open standards, enabling workloads and data to run anywhere. It integrates two main opensource projects [Kabanero](https://kabanero.io/) and [Appsody](https://appsody.dev/).
+![Architecture diagram of sample monolithic application](images/m1.png)
 
+There are five tightly coupled services within this application:
 
+* Admin login (`admin_login.ejs`)
+* Admin dashboard (`admin.ejs`)
+* User login (`user_login.ejs`)
+* User dashboard (`users.ejs`)
+* Not found (`notfound.ejs`)
 
-## Prerequisites:
+If too much workload or user traffic occurs on one service, then all of the other interconnected services can be affected. Or the complete project can go down, which is one of the major disadvantages of monolithic architectures.
 
-To complete the steps in this tutorial, you need to:
+To break down this monolithic application, you separate the admin services (`admin_login.ejs` and `admin.ejs`) and user services (`user_login.ejs` and `users.ejs`) into microservices so they can run independently. Both services have different functions, so the new application is able to scale them depending on the workload. The two new microservices are:
 
-1. [Install Docker](https://docs.docker.com/install/) on your local machine.
+* [Admin microservice](https://github.com/mahsankhaan/micro-admin)
+* [User microservice](https://github.com/mahsankhaan/micro-user)
 
-2. Install [Visual Studio Code](https://code.visualstudio.com/) for local development.
+To do this, you put the admin services into one project and the user services into another, and then deploy them both to a central GitHub repo. Both have their own dependencies and run independently, as you can see in the following architecture diagram. (Don't worry if this does not fully make sense to you right now. The tutorial steps explain it further.)
 
-3. Get access to a Red Hat OpenShift on IBM Cloud cluster, with IBM Cloud Pak for Applications from [here](https://cloud.ibm.com/kubernetes/catalog/openshiftcluster?cm_sp=ibmdev-_-developer-tutorials-_-cloudreg).
+![Architecture diagram of the new microservices architecture](images/micro.png)
 
-4. Must have [Github](https://github.com/) account 
+## Prerequisites
 
-## Steps:
-1. [Clone and understand the architecture of monolithic application](#1-clone-and-understand-the-architecture-of-monolithic-application)
-2. [Understand how to break down our monolithic application](#2-understand-how-to-break-down-our-monolithic-application)
-3. [Install Codewind in Visual Studio to create microservices test and deploy to GitHub](#3-install-codewind-in-visual-studio-to-create-microservices-test-and-deploy-to-GitHub)
-4. [Initialize Tekton and integrate with github repository](#4-initialize-tekton-and-integrate-with-github-repository)
-5. [Verify if the microservices are up and running](#5-verify-if-the-microservices-are-up-and-running)
-6. [Conclusion](#conclusion)
+To complete the steps in this tutorial, you need:
 
+* [Docker](https://docs.docker.com/install/) on your local computer.
+* [Visual Studio Code](https://code.visualstudio.com/) for local development.
+* Access to a [Red Hat OpenShift on IBM Cloud](https://cloud.ibm.com/kubernetes/catalog/openshiftcluster/?cm_sp=ibmdev-_-developer-tutorials-_-cloudreg) cluster with [IBM Cloud Pak for Applications](https://cloud.ibm.com/catalog/content/ibm-cp-applications-b4fbe4b9-a9de-406a-94de-5e0c7dc20bf7-global/?cm_sp=ibmdev-_-developer-tutorials-_-cloudreg).
+* A [GitHub](https://github.com/) account.
 
-### 1. Clone and understand the architecture of monolithic application
+## Estimated time
 
-1. We'll use this repo as it contains our core banking traditional Monolithic Application. 
-2. Open your terminal and change your directory by using the cd downloads command. (Or any other directory in which you want to clone the project)
-3. Run command `git clone https://github.com/mahsankhaan/cloud-pak-for-applications.git`.   
-4. Open the project in Visual Studio.
+After the prerequisites are installed, this tutorial will take __[EDITOR NOTE: HOW MANY MINUTES ARE REQUIRED?]__ to complete the steps.
 
-#### Architecture of the monolithic application
+## Steps
 
-![GitHub Logo](images/m1.png)
+1. [Clone the GitHub repository](#step-1-clone-the-github-repository)
+1. [Install Codewind in Visual Studio to create a microservice test and deploy to GitHub](#step-2-install-codewind-in-visual-studio-to-create-a-microservices-test-and-deploy-to-GitHub)
+1. [Create GitHub tokens](#step-3-create-github-tokens)
+1. [Initialize Tekton and integrate with the central GitHub repository](#step-4-initialize-tekton-and-integrate-with-the-central-github-repository)
+1. [Verify that the microservices are up and running](#step-5-verify-that-the-microservices-are-up-and-running)
 
-There are 5 services under the "views" folder running in a single project that are tightly coupled.If we get workload or user's traffic on one service, suppose "user dashboard service " then all the other services that are interconnected with it can be affected or even complete project can go down which is one of the major disadvantages of monolithic architecture
+### Step 1. Clone the GitHub repository
 
-![GitHub Logo](images/sc.png)
+1. Open your terminal and change your directory by using the `cd downloads` command. (Or any other directory in which you want to clone the project.)
+1. Run the command: `git clone https://github.com/mahsankhaan/cloud-pak-for-applications.git`.
+1. Open the project in Visual Studio.
 
-### 2. Understand how to break down our monolithic application
+   ![Screen capture of project in Visual Studio Code](images/sc.png)
 
-There are 5 tightly coupled services:
- 
-1. Admin login
-2. Admin Dashboard
-3. User Login 
-4. User Dashboard
-5. Not found 
+### Step 2. Install Codewind in Visual Studio to create a microservice test and deploy to GitHub
 
-After looking at the above services we can identify that we can breakdown Admin(login, dashboard) and User (login, dashboard) services into Microservices so they can run independently because both the services have different functionalities so we can scale them depending on the workload.
+#### What is Codewind and why does this tutorial use it?
 
-Breakdown will be into two microservices:
+In the present era, one of the biggest challenges for a developer is to build and deploy cloud-native applications. Many actions are required to build a perfect solution on the cloud and you need to build images, create containers, debug, analyze the different logs, assess performance metrics, and rebuild the containers with each code change. That's why this tutorial uses Codewind, an opensource project that helps you achieve all of the above actions really quicky with ready-made, container-based project templates and can easily be integrated with your visual code integrated development environment (IDE). [Learn more about Codewind.](https://www.eclipse.org/codewind)
 
-1. [Admin Microservice](https://github.com/mahsankhaan/micro-admin)
-2. [User Microservice](https://github.com/mahsankhaan/micro-user)
+Since you know which services will be converted into microservices, start by initializing Codewind in Visual Studio with the following tasks:
 
-#### How will we do that?
-We will put Admin services in one project and User services into another and deploy it on the central repo (Github) both will have their dependencies and run independently. Below architecture diagram is self explanatory,but don't worry if it doesn't make sense to you right now after the next few steps you will learn and understand how to do that.
+1. Open Visual Studio.
+1. Select **Extensions** and search for Codewind.
+1. Select **Install** and kindly wait, since it will take some time to initialize.
+1. Once successfully installed, you will see the Codewind section.
+1. Select **Codewind** and start the local Codewind.
+1. Right-click **local** and select **Create New Project**.
+1. Select **Kabanero Node.js Express simple template**.
+1. Select the folder where you want to initialize the template and name it `micro-admin`. (This step can take five to ten minutes to initalize.)
+1. Once your template is initalized successfully, kindly open the folder where you created `micro-admin`. You will see the newly created template.
 
-![GitHub Logo](images/micro.png)
+   ![Screen capture of new template](images/c12.png)
 
+   Next, you will break down the monolithic application in three stages.
 
-### 3. Install Codewind in Visual Studio to create microservices test and deploy to GitHub 
+1. First, visit the folder where you cloned the monolithic application in [Step 1](#step-1-clone-the-github-repository). In that folder, open the `app.js` file and copy the following lines:
+
+  ```
+  const express = require("express")
+  const path = require('path');
+  const app = express();
+  app.set('view engine', 'ejs');
+  app.set('views', path.join(__dirname, 'views'));
+  app.use(express.static(path.join(__dirname, 'node_modules')));
+  app.use(express.static(path.join(__dirname, 'public')));
 
-#### What is Codewind and why are we using it?
-In the present era, one of the biggest challenges for a developer is to build and deploy cloud-native applications. There are many actions required to build a perfect solution on cloud and for that, you need to build images, create containers, debug, analyze the different logs, assess performance metrics, and rebuild the containers with each code change.
-That's why we are using Codewind an opensource project that helps us achieve all of the above actions really quicky with ready-made container-based project templates and can easily be integrated with our visual code IDE. To learn more about Codewind please visit [here](https://www.eclipse.org/codewind/)
+  app.get("/", function(req,res){
+      res.render("admin_login");
+  });
+  app.get("/admin_login", function(req,res){
+      res.render("admin_login");
+  });
+  app.get("/admin_in", function(req,res){
+      var Name = req.query.name;
+      var Password = req.query.pass;
+  if (Password =="123")
+  {
+    console.log("Successfully logged in as admin");
+    res.render("admin");
+  }
+  else{
+      res.render("notfound.ejs");
+  }
+  });
+  module.exports.app = app;
+  ```
+
+   Then, go to your new `micro-admin` folder and replace the `app.js` file with the copied version.
+
+1. Second, copy the complete **public** folder located within the folder where you [cloned the monolithic application](#step-1-clone-the-github-repository), and paste it into your new `micro-admin` folder.
+1. Third, open the **views** folder located within the folder where you [cloned the monolithic application](#step-1-clone-the-github-repository), and copy only the `admin.ejs`, `admin_login.ejs`, and `notfound.ejs` files. Paste those files into your new `micro-admin` folder.
+
+   Your structure should now look like the following:
+
+   ![Screen capture of updated micro-admin folder](images/s2.png)
+
+1. Open your terminal inside Visual Studio and run the command `npm install ejs`. This will install the Embedded JavaScript templating that you will use for front-end styling.
+1. Go to **Codewind** in Visual Studio and look for your project there, running as `micro-admin`. Right-click it and select **Open Application** to open the page. From there, select **enable project** (if it is disabled) and then select **build**. Check **Application Endpoint** to see where your application is running.
+1. To test your application, right-click `micro-admin`, select **Application Monitor**, and hit the application two or three times to see the changes.
+
+  ![Screen capture of Application Metrics for Node.js](images/s3.png)
+
+1. Run `appsody build` in your Visual Studio terminal. You don't have to worry and spend your time on a deployment configuration file since Codewind will create it for you. You only need to focus on your application development.
+1. After the above command executes successfully, you will see a new generated file called `app-deploy.yaml` on the left hand side of your screen. This file will help you in a later step to deploy the application on Cloud Pak for Applications.
+
+   *Note:* If you do not have a namespace section, please add it as follows:
+
+  ```
+  apiVersion: appsody.dev/v1beta1
+  kind: AppsodyApplication
+  metadata:
+    namespace: kabanero
+    creationTimestamp: null
+    labels:
+      image.opencontainers.org/title: micro-admin
+      stack.appsody.dev/id: nodejs-express
+      stack.appsody.dev/version: 0.2.8
+    name: micro-admin
+    ....
+  ```
 
-Once we have decided which service needs to be converted into micro-services,lets initialize Codewind in our visual studio, Please follow the below steps to work with Codewind:
+  You successfully created the Admin microservice.
 
-1. Open VisualStudio.
-2. On left select Extensions and search for Codewind.
-3. Select Install and kindly wait it will take some time to initialize.
-4. Once successfully installed you'll be able to see **Codewind** section on left
-5. Select **Codewind** and start local Codewind.
-6. Right-click on local and select **Create New Project** 
-7. Select template **Kabanero Node.js Express simple template**
-8. Select the folder where you want to initialize tempate and name it as **micro-admin**. (This step can take 5-10mins)
-9. Once your template is initalized successfully,kindly open the folder where you have created mirco-admin. And we're able to see newly created template.
+1. Go back to the beginning of this [Step](#step-2-install-codewind-in-visual-studio-to-create-a-microservices-test-and-deploy-to-GitHub) and repeat tasks 6 to 17 to create the second microservice, naming it `micro-user`.
 
-![GitHub Logo](images/c12.png)
+   This time, your `app.js` file will be for users, so copy the code below during task 10:
 
-10. Now in this step we will break down our monolithic application and for that we need to do three steps.First, visit the folder where we have cloned our monolithic application [here](#1-clone-and-understand-the-architecture-of-monolithic-application) and from there you can find **app.js** file and copy below lines. 
-```
-const express = require("express")
-const path = require('path');
-const app = express();
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-app.use(express.static(path.join(__dirname, 'node_modules')));
-app.use(express.static(path.join(__dirname, 'public')));
+  ```
+  const express = require("express")
+  const path = require('path');
+  const app = express();
+  app.set('view engine', 'ejs');
+  app.set('views', path.join(__dirname, 'views'));
+  app.use(express.static(path.join(__dirname, 'node_modules')));
+  app.use(express.static(path.join(__dirname, 'public')));
 
-app.get("/", function(req,res){
-    res.render("admin_login");
-});
-app.get("/admin_login", function(req,res){
-    res.render("admin_login");
-});
-app.get("/admin_in", function(req,res){ 
-    var Name = req.query.name;
-    var Password = req.query.pass;
-if (Password =="123")
-{ 
-  console.log("Successfully logged in as admin");
-  res.render("admin");
-}
-else{
-    res.render("notfound.ejs");
-}
-});
-module.exports.app = app;
+  app.get("/user_login", function(req,res){
+      res.render("user_login");
+      console.log("User login");
+  });
+  app.get("/user_in", function(req,res){
+      var Name = req.query.name;
+      var Password = req.query.pass;
+  if (Password =="123")
+  {
+    console.log("Successfully logged in as user");
+    res.render("users");
+  }
+  else{
+      res.render("notfound.ejs");
+  }
+  });
+  app.listen(3000 , function(){
+      console.log("App is running");
+  });
+  ```
 
-```
+   Also, after task 12, you should see a structure like this for your new `micro-user` folder:
 
-Second, copy complete **public** folder and third, from **views** folder only copy(admin.ejs ,admin_login.ejs,notfound.ejs) 
+  ![Screen capture of updated micro-user folder](images/ss.png)
 
-11. Once we have copied all these three steps from above, let's move them into the micro-admin folder. First,replace the **app.js** with the copied version and then move the **public** and **views** folder. Now our final structure would be like below.
+   Once you finish testing and creating the User microservice, it's time to individually upload both microserves to the central GitHub repository, which will be explained in [Step 3](#step-3-initialize-tekton-and-integrate-with-the-central-github-repository).
 
-![GitHub Logo](images/s2.png)
+*Note:* If you have any difficulty executing this step to create both microservices, please check out the following sample repositories that were created using Codewind:
 
-12. Open your terminal inside the VS. Run Command `npm install ejs`. This will install Embedded JavaScript templating that we are using for front-end styling.
+* [Admin microservice](https://github.com/mahsankhaan/micro-admin.git)
+* [User microservice](https://github.com/mahsankhaan/micro-user.git)
 
+### Step 3. Create GitHub tokens
 
-13. Go to **Codewind** in VS you must see your project there running as "micro-admin" right-click it and select **Open Application** this will popup the page and from there **enable project** (if it is disabled) and then select **build**. Check **Application Endpoint** it shows where your application running.
+Before you initialize Tekton, it is really important to create two GitHub tokens for your admin and user microservices:
 
-14. Test your application by right-clicking micro-admin -> **Application Monitor** and hit the application 2 or 3 times to see the changes.
+1. Open [GitHub](https://github.com/) and log into your account.
+1. Click your profile photo to expand the account profile menu.
+1. Within the menu, click **Settings > Developer settings > Personal access tokens**.
+1. Click the **Generate new token** button.
+1. Give your first token a descriptive name by typing `tekton` into the **Note** field.
+1. Select the scopes, or permissions, you'd like to grant this token. To use your token to access repositories from the command line, select the **repo** checkbox.
 
-![GitHub Logo](images/s3.png)
+   ![Screen capture of Developer settings page in GitHub](images/s6.png)
 
-15. Run `appsody build` in your VS terminal,as we dont have to worry and spend our time on deployment configuration file as codewind will create for us and we only need to focus on our application development.
-16. After the above command executed successfully on left there will be a new generated file as **app-deploy.yaml**. This file later on help us in deploying the application on CP4A.
-```
-apiVersion: appsody.dev/v1beta1
-kind: AppsodyApplication
-metadata:
-  namespace: kabanero
-  creationTimestamp: null
-  labels:
-    image.opencontainers.org/title: micro-admin
-    stack.appsody.dev/id: nodejs-express
-    stack.appsody.dev/version: 0.2.8
-  name: micro-admin
-  ....
-```
+   __[EDITOR NOTE: UPDATE BOTH SCREEN CAPTURE IMAGES `S6.PNG` AND `S12.PNG` TO REFLECT THE EXACT TUTORIAL INSTRUCTIONS. THE TOKEN NAME IN IMAGE `S6.PNG` IS `TEKTON`, BUT BOTH OF THE TOKEN NAMES IN IMAGE `S12.PNG` APPEAR AS `TEKTON-APP` BECAUSE THE REST OF THE NAMES ARE COVERED UP BY THE BLACK BOX.]__
 
-**NOTE: If you don't have namepsace section please add it as above**
+1. Click the **Generate token** button.
+1. Copy the token to your clipboard. *It is important that you do this.* For security reasons, after you navigate off the page, you will not be able to see the token again.
+1. To create your second token, click the **Generate new token** button again.
+1. Give your second token a descriptive name by typing `tekton` into the **Note** field. __[EDITOR NOTE: PLEASE PROVIDE YOUR READER WITH THE SECOND NAME TO USE SO THEIR RESULTS MATCH THE ONES DISPLAYED IN YOUR SCREEN CAPTURE IN IMAGE `S12.PNG`.]__
+1. Select the scopes, or permissions, you'd like to grant this token. To use your token to access repositories from the command line, select the **repo** checkbox.
+1. Click the **Generate token** button.
+1. Copy the second token to your clipboard. *It is important that you do this for both tokens.*
 
-17.  We have successfully created an Admin microservice.
-18. Follow step 3 again to create 2 microservice and name it **micro-user**. And we will have the structure like below.But this time our **app.js** will be for the users so copy the below code.
+   Once both tokens are created, you will see a page similar to the one below:
 
-```
-const express = require("express")
-const path = require('path');
-const app = express();
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-app.use(express.static(path.join(__dirname, 'node_modules')));
-app.use(express.static(path.join(__dirname, 'public')));
+   ![Screen capture of Personal access token page in GitHub](images/s12.png)
 
-app.get("/user_login", function(req,res){
-    res.render("user_login");
-    console.log("User login");
-});
-app.get("/user_in", function(req,res){ 
-    var Name = req.query.name;
-    var Password = req.query.pass;
-if (Password =="123")
-{ 
-  console.log("Successfully logged in as user");
-  res.render("users");
-}
-else{
-    res.render("notfound.ejs");
-}
-});
-app.listen(3000 , function(){
-    console.log("App is running");
-});
-```
+### Step 4. Initialize Tekton and integrate with the central GitHub repository
 
-![GitHub Logo](images/ss.png)
+#### What is Tekton and why does this tutorial use it?
 
-19. Once we have tested and created deployments for our two microservices it's time to upload them one by one to central repository **GitHub**.
+Tekton is a powerful, yet flexible, Kubernetes-native open source framework for creating continuous integration and continuous delivery (CI/CD) systems. This tutorial uses Tekton because it is a built-in tool for IBM Cloud Pak for Applications that connects the GitHub central repository and a webhook that lifts and shifts application source code from your local development to the cloud. [Learn more about Tekton.](https://developer.ibm.com/articles/introduction-to-tekton-architecture-and-design/)
 
-Note: If there is any difficulty in executing step 3 please check out these repositories available and created using Codewind.
-1. [Admin-microservice](https://github.com/mahsankhaan/micro-admin.git)
-2. [User-microservice](https://github.com/mahsankhaan/micro-user.git)
+To initialize Tekton, perform the following tasks:
 
+1. Open your Red Hat OpenShift web console.
+1. Once you are logged in successfully, select **Kabanero** from the __My Project__ section.
+1. Select **Cloud Pak for Applications** from the menu.
+1. You should see the following screen:
 
+   ![Screen capture of Welcome to Cloud Pak for Applications page](images/s4.png)
 
-### 4. Initialize Tekton and integrate with GitHub repository
+1. Click the __Instance__ tab.
+1. Within the __Tools__ section, select **Tekton**. You should see the following screen:
 
-Before we initialize Tekton it is really important to have GitHub Token, so let's create two tokens for admin and user.
-Settings -> Developer settings -> personal access token -> generate new token 
+   ![Screen capture of Tekton Pipelines page](images/s5.png)
 
-![GitHub Logo](images/s6.png)
+1. Select **Webhooks** from the menu and proceed to create two webhooks for your microservices (`micro-admin` and `micro-user`).
+1. For the first webhook, enter `w1-admin` in the __Name__ field, `https://github.com/mahsankhaan/micro-admin.git` in the __Repository URL__ field, and `micro-token-1` in the __Access Token__ field.
 
-Once both tokens are created you will able to see below image :
+   ![Screen capture of Webhook Settings page for creating the `w1-admin` webhook](images/s7.png)
 
-![GitHub Logo](images/s12.png)
+   Click __Create__.
 
+1. For the second webhook, enter `w2-user` in the __Name__ field, `https://github.com/mahsankhaan/micro-user.git` in the __Repository URL__ field, and `micro-token-2` in the __Access Token__ field.
 
-**IMPORTANT NOTE:** Please copy the token, as you won’t be able to see it again! 
+   ![Screen capture of Webhook Settings page for creating the `w2-user` webhook](images/s11.png)
 
+   Click __Create__.
 
-#### What is Tekton and why are we using it?
-Tekton is a powerful yet flexible Kubernetes-native open-source framework for creating continuous integration and delivery (CI/CD) systems. We are using Tekton because it is a built-in tool in IBM Cloud Pak for Applications that connect our central repository **GitHub** and **Webhook** that lift and shift our application source code form local development to the cloud.
+1. Check that Tekton and GitHub are successfully connected by opening your GitHub repository ... __[EDITOR NOTE: ADD SPECIFIC INSTRUCTIONS ABOUT HOW TO NAVIGATE TO THE CORRECT LOCATIONS IN GITHUB TO CHECK THIS.]__
 
-To know more about Tekton,please visit [here](https://developer.ibm.com/articles/introduction-to-tekton-architecture-and-design/)
+   ![Screen capture of Webhooks section of GitHub](images/s8.png)
 
-Please follow below steps to initialize Tekton:
-1. Open OpenShift Web Console.
-2. Once you are logged in successfully, select **Kabanero** from my project section.
-3. From left menu select **Cloud Pak for Applications**
-4. Now you can see the below screen.
+   *Important:* Do not worry if you get an error notice. This will resolve after the repo code is updated.
 
-![GitHub Logo](images/s4.png)
+1. Open your GitHub and perform some changes within **(views -> user.js)** in the user repository, an important step to trigger the Tekton pipeline. __[EDITOR NOTE: PLEASE BE MORE SPECIFIC WITH THE INSTRUCTIONS FOR THIS TASK. A FILE CALLED `USER.JS` AND A REPO CALLED `USER REPOSITORY` ARE NOT MENTIONED PREVIOUSLY IN THIS TUTORIAL. ARE YOU REFERRING TO THE `MICRO-USER` REPO CREATED IN STEP 2 AND THE `USERS.EJS` FILE WITHIN IT? ALSO, BE VERY SPECIFIC ABOUT THE CHANGES YOUR READER SHOULD MAKE TO SEE THE RESULTS YOU ARE DESCRIBING.]__
+1. Next, open your Tekton dashboard. Under the Tekton dropdown list, select **PipelineRuns**.
+1. Wait until the rows under the **Status** column display `All tasks completed executing`, which indicates you successfully integrated your central repo to your Tekton instance on IBM Cloud Pak for Applications.  
 
-5. Please go to Instance, in Tools section select  **Tekton** link and you will be redirected to the below image.
+   *Important:* Perform the changes in each repository separately. For example, perform the changes in the User repository first and after it is successfully built and deployed, then update the Admin repository. Or vice versa.
 
-![GitHub Logo](images/s5.png)
+   ![Screen capture of Tekton PipelineRuns page](images/s9.png)
 
-6. Select **Webhook** from the left menu and create two webhook for
+For more details about Tekton, check out [this great tutorial](https://developer.ibm.com/tutorials/deploy-appsody-to-openshift-with-tekton-pipelines/).
 
-a. micro-admin
+### Step 5. Verify that the microservices are up and running
 
-![GitHub Logo](images/s7.png)
-
-b. micro-user 
-
-![GitHub Logo](images/s11.png)
-
-
-7. Now check if Tekton and GitHub are successfully connected.  
-
-**IMPORTANT NOTE** Don't worry if you are getting a red sign, it will turn green once the repo code is updated)
-
-![GitHub Logo](images/s8.png)
-
-
-8. Open your Github do some changes in **(views -> user.js)** in user repository, an important step to trigger the Tekton pipeline. 
-
-9. Next, open your Tekton dashboard on left from Tekton dropdown select **Pipeline Runs**. 
-
-10. Wait for a while until you see your Status as **All tasks completed executing**. It means we have successfully integrated our central repo to our Tekton instance on IBM Cloud Pak for applications.  
-
-
-**IMPORTANT NOTE**: First do the changes in **User repository** and once it is successfully built and deploy then update the **Admin repository** or vice versa.
-
-For more details about Tekton, please check out this great tutorial [here](https://developer.ibm.com/tutorials/deploy-appsody-to-openshift-with-tekton-pipelines/)
-
-![GitHub Logo](images/s9.png)
-
-
-### 5. Verify if the microservices are up and running
 1. Open the OpenShift dashboard.
-2. Once the dashboard is open from the left menu select Application.
-3. Go in routes and there will be two services up and running.
-4. To run the application click links in **Hostname**
+1. Select **Applications** from the menu.
+1. Select **Routes** and you should then see your two microservices up and running on the Routes page.
+1. To run the application, click the links within the **Hostname** column.
 
-![GitHub Logo](images/s10.png)
+   ![Screen capture of the OpenShift Routes page](images/s10.png)
 
-#### User :
+   Here is a sample screen capture of the user interface:
 
-![GitHub Logo](images/c1.png)
+   ![Screen capture of the User interface](images/c1.png)
 
-#### Admin :
+   Here is a sample screen capture of the admin interface:
 
-![GitHub Logo](images/ss2.png)
+   ![Screen capture of the Admin interface](images/ss2.png)
 
-### 6. Conclusion
-In this tutorial, we learned the lifecycle and how application modernization for a Node.js application using IBM Cloud Pak for Applications. We saw how we can integrate Codewind in Visual Studio that helps in breaking down the one traditional monolithic project containing multiple services into two projects containing related services to each project and how can we test, debug and monitor each project services independently. Once we are satisfied with our projects in local development then we can deploy it to the central repo GitHub. From there we learn how to create GitHub token and integrate Tekton instance from IBM Cloud Pak for Applications that help in CI/CD process that triggers all the changes implemented by the local development team. Both the projects running successfully and independently on  IBM Cloud Pak for Applications and now we can scale them depending on the workload. In the future, we can integrate as many microservices as we want without affecting or scaling down the complete project.
+## Conclusion
+
+In this tutorial, you learned how to modernize a Node.js application, transforming it from a monolithic architecture into a microservices architecture using Cloud Pak for Applications. By independently running two projects containing related services, you can scale them depending on the workload. In addition, you can  integrate as many microservices as you want without affecting or scaling down the complete project.
