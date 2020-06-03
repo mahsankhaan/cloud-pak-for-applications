@@ -249,7 +249,7 @@ To initialize Tekton, perform the following tasks:
    ![Screen capture of Webhook Settings page for creating the `w2-user` webhook](images/s11.png)
 
 
-1. Check, Tekton and GitHub are successfully connected by opening your micro and admin repositories. Go to micro-admin repository, from there select __Webhooks__ on left menu and if pipeline is connected properly then there must be a link on right `http://w1-admin-6zmvc.kabanero..` (you may have different link) . Kindly follow the same procedure for micro-user repository.  
+1. Check, Tekton and GitHub are successfully connected by opening your micro and admin repositories. Go to __micro-admin__ repository,under __settings__ select __Webhooks__ on left menu and if pipeline is connected properly then there must be a link on right `http://w1-admin-6zmvc.kabanero..` (you may have different link) . Kindly follow the same procedure for __micro-user__ repository.  
 
    ![Screen capture of Webhooks section of GitHub](images/s8.png)
 
