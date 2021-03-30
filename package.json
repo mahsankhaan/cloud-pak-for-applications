@@ -5,6 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "'"
+    "start": "node app.js",
+
   },
   "author": "MuhammadAhsanKhan",
   "license": "ISC",
