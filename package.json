@@ -4,8 +4,8 @@
   "description": "My monolithic banking-app",
   "main": "app.js",
   "scripts": {
-    "test": "'"
-    "start": "node app.js",
+    "test": "'",
+    "start": "node app.js"
 
   },
   "author": "MuhammadAhsanKhan",
